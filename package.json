@@ -1,0 +1,33 @@
+{
+  "name": "terraform-lambda",
+  "version": "1.0.0",
+  "description": "Terraform for Lambda + ApiGateway",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scripts": {
+      "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamkwok/terraform-lambda.git"
+  },
+  "author": "James Kwok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamkwok/terraform-lambda/issues"
+  },
+  "homepage": "https://github.com/jamkwok/terraform-lambda#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "esbuild": "^0.18.11",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.5"
+  }
+}
