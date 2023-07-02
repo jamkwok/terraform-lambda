@@ -18,3 +18,10 @@ Step 3: Initialise Terraform
 cd terraform
 terraform init
 ```
+
+Step 4: Build Docker and test
+```bash
+docker build -t revenue_nsw_ecr:test .
+docker run -p 9000:8080 revenue_nsw_ecr:test
+curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+```
