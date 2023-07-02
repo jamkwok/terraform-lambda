@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/nodejs:16 as builder
 WORKDIR /usr/app
-COPY package.json src/index.ts  ./
+COPY package.json package-lock.json src/index.ts  ./
 RUN npm install
 RUN npm run build
     
