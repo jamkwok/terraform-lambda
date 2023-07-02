@@ -21,7 +21,22 @@ terraform init
 
 Step 4: Build Docker and test
 ```bash
+# If you build on an Arm Mac make sure to docker build using the platform option.
 docker build -t revenue_nsw_ecr:test .
 docker run -p 9000:8080 revenue_nsw_ecr:test
+# Curl
 curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+```
+
+Step 5: Run terraform to deploy infrastructure
+```bash
+cd terraform
+terraform apply
+# Test using image from ecr 
+docker run -p 9000:8080 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com/revenue_nsw_ecr:latest
+```
+
+Step 6: Test endpoint. Get this from Apigateway >> API name >> Stage Name >> Invoke URL
+```bash
+curl https://amtvoosafi.execute-api.ap-southeast-2.amazonaws.com/test
 ```
