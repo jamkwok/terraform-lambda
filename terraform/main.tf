@@ -36,6 +36,7 @@ resource "aws_ecr_repository_policy" "repository_policy" {
   policy     = data.aws_iam_policy_document.repository_policy_document.json
 }
 
+# Grant Lambda access via ECR policy
 data "aws_iam_policy_document" "repository_policy_document" {
   statement {
     sid    = "new policy"
@@ -94,11 +95,14 @@ EOF
 
 // Lambda Permissions
 resource "aws_lambda_permission" "allow_apigateway" {
+  depends_on = [
+    aws_lambda_function.revenue_nsw_lambda,
+    aws_api_gateway_rest_api.revenue_nsw_api
+  ]
   statement_id  = "AllowExecutionByApiGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.revenue_nsw_lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_iam_role.revenue_nsw_lambda_exec_role.arn}"
 }
 
 // ApiGateway
