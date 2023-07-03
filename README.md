@@ -33,7 +33,7 @@ Step 5: Run terraform to deploy infrastructure
 ```bash
 cd terraform
 terraform apply
-# Test using image from ecr 
+# Test using image from ecr (Substitute your own ecr url, terraform will automatically use your default aws credentials)
 docker run -p 9000:8080 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com/revenue_nsw_ecr:latest
 ```
 
