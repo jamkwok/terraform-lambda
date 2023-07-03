@@ -2,6 +2,14 @@ provider "aws" {
   region = "ap-southeast-2"
 }
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+locals {
+    account_id = data.aws_caller_identity.current.account_id
+    aws_region = data.aws_region.current.name
+}
+
 resource "aws_ecr_repository" "revenue_nsw_ecr" {
   name                 = "revenue_nsw_ecr"
   image_tag_mutability = "MUTABLE"
@@ -9,13 +17,16 @@ resource "aws_ecr_repository" "revenue_nsw_ecr" {
   image_scanning_configuration {
     scan_on_push = true
   }
+}
+
+resource "null_resource" "ecr_image" {
   provisioner "local-exec" {
     command = <<EOF
 cd ..
-docker build --platform=linux/amd64 -t revenue_nsw_ecr:latest .
-docker tag revenue_nsw_ecr:latest 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com/revenue_nsw_ecr:latest
-aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com
-docker push 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com/revenue_nsw_ecr:latest
+docker build --platform=linux/amd64 -t ${aws_ecr_repository.revenue_nsw_ecr.name}:latest .
+docker tag ${aws_ecr_repository.revenue_nsw_ecr.name}:latest ${local.account_id}.dkr.ecr.${local.aws_region}.amazonaws.com/${aws_ecr_repository.revenue_nsw_ecr.name}:latest
+aws ecr get-login-password --region ${local.aws_region} | docker login --username AWS --password-stdin ${local.account_id}.dkr.ecr.${local.aws_region}.amazonaws.com
+docker push ${local.account_id}.dkr.ecr.${local.aws_region}.amazonaws.com/${aws_ecr_repository.revenue_nsw_ecr.name}:latest
 EOF
   }
 }
@@ -45,7 +56,8 @@ data "aws_iam_policy_document" "repository_policy_document" {
 
 resource "aws_lambda_function" "revenue_nsw_lambda" {
   depends_on = [
-    aws_ecr_repository.revenue_nsw_ecr
+    aws_ecr_repository.revenue_nsw_ecr,
+    null_resource.ecr_image
   ]
 
   function_name = "RevenueNSWServerlessExample"
