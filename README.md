@@ -39,6 +39,6 @@ docker run -p 9000:8080 589079287501.dkr.ecr.ap-southeast-2.amazonaws.com/revenu
 
 Step 6: Test endpoint. Get this from Apigateway >> API name >> Stage Name >> Invoke URL. The terraform in this repo will also output the invocation url.
 ```bash
-# Example
+# Example url (will be different for you)
 curl https://amtvoosafi.execute-api.ap-southeast-2.amazonaws.com/test
 ```
