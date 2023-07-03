@@ -3,7 +3,8 @@ Terraform for Lambda + ApiGateway Working Sample Code
 The following uses terraform to instantiate ECR and deplpy typescript lambda docker for APIGateway invocation.
 
 ## Prerequisites
-docker
+- docker
+- Linux/MacOS (docker image build uses bash)
 
 ## Steps
 Step 1: Install Terraform
