@@ -22,6 +22,7 @@ terraform init
 Step 4: Build Docker and test
 ```bash
 # If you build on an Arm (m1/m2) Mac make sure to docker build using the platform option. Alternatively you can change Lambda to use the arm architecture
+# eg: --platform=linux/amd64
 docker build -t revenue_nsw_ecr:test .
 docker run -p 9000:8080 revenue_nsw_ecr:test
 # Curl
