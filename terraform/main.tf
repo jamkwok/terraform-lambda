@@ -158,7 +158,12 @@ resource "aws_api_gateway_deployment" "revenue_nsw_api_deployment" {
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.revenue_nsw_api.id}"
-  stage_name  = "test"
+  stage_name  = "dev"
+}
+
+output "deployment_invoke_url" {
+  description = "Deployment invoke url"
+  value       = aws_api_gateway_deployment.revenue_nsw_api_deployment.invoke_url
 }
 
 
