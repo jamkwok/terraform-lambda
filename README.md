@@ -1,6 +1,11 @@
 # terraform-lambda Example
 Terraform for Lambda + ApiGateway Working Sample Code 
+The following uses terraform to instantiate ECR and deplpy typescript lambda docker for APIGateway invocation.
 
+## Prerequisites
+docker
+
+## Steps
 Step 1: Install Terraform
 Terraform v1.5.2
 https://developer.hashicorp.com/terraform/downloads
