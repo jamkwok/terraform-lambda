@@ -1,5 +1,5 @@
-# terraform-lambda
-Terraform for Lambda + ApiGateway 
+# terraform-lambda Example
+Terraform for Lambda + ApiGateway Working Sample Code 
 
 Step 1: Install Terraform
 Terraform v1.5.2
